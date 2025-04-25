@@ -1,0 +1,38 @@
+.baseNotesContainer {
+  height: 100vh;
+  background-color: #dae5f5;
+  padding: 15vh 15vh 0vh 15vh;
+  font-family: "Roboto", sans-serif;
+  display: grid;
+  grid-template-rows: 1.1fr 0.9fr 0.3fr;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.imageContainer img {
+  width: 30vw;
+}
+
+.textContainer {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textContainer h1,
+.textContainer p {
+  width: 30vw;
+  text-align: center;
+  margin-bottom: 1vh;
+}
+
+.footerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1vw;
+  margin-bottom: 1vh;
+}
