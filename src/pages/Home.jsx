@@ -106,6 +106,8 @@ const Home = () => {
 
     localStorage.setItem("currentTitle", title);
     localStorage.setItem("currentColor", titles.color[index]);
+    localStorage.setItem("extractedLetters", extractLetters(title));
+    localStorage.setItem("currentID", index);
   };
 
   return (
