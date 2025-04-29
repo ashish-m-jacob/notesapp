@@ -35,7 +35,7 @@ const Home = () => {
         color: [...parsedTitles.color],
       });
     }
-  });
+  }, [groupName]);
 
   const handleCreate = () => {
     const storedTitles = localStorage.getItem("titles");

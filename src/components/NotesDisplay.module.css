@@ -15,7 +15,15 @@
   height: 100%;
   background-color: #dae5f5;
   padding: 3vh;
-  max-height: 50vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  overflow-y: scroll;
+}
+
+.noteContainer {
+  background-color: white;
+  margin-bottom: 2vh;
+  padding: 1vh;
 }
 
 .messageDiv {
