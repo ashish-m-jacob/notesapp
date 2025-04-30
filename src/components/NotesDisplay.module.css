@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 .notesDisplayContainer {
   height: 100vh;
   background-color: white;
@@ -15,17 +17,30 @@
   height: 100%;
   background-color: #dae5f5;
   padding: 3vh;
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   overflow-y: scroll;
 }
 
 .noteContainer {
   background-color: white;
   margin-bottom: 2vh;
-  padding: 1vh;
+  padding: 3vh;
+  font-size: 0.85rem;
+  line-height: 3vh;
+  font-family: "Roboto", sans-serif;
+  border-radius: 0.3rem;
+  letter-spacing: 0.05vw;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  height: initial;
 }
 
+.dateTime {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5vw;
+  margin-top: 2vh;
+}
 .messageDiv {
   display: flex;
   flex-direction: column;
@@ -80,10 +95,11 @@
   align-items: flex-start;
   resize: none;
   font-family: "Roboto", sans-serif;
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 2vh;
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+  letter-spacing: 0.05vw;
 }
 
 .textBoxContainer textarea:focus {

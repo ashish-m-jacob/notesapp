@@ -14,8 +14,11 @@ const Home = () => {
   const [notesSelected, isNotesSelected] = useState(false);
 
   const [groupName, setGroupName] = useState("");
+  const [id, setId] = useState("");
+  const [title, setTitle] = useState("");
+  const [color, setColor] = useState("");
+  const [initials, setInitials] = useState("");
   const [selectedColor, setSelectedColor] = useState(null);
-
   const colors = [
     "#B38BFA",
     "#FF79F2",
@@ -104,10 +107,10 @@ const Home = () => {
 
     isNotesSelected(true);
 
-    localStorage.setItem("currentTitle", title);
-    localStorage.setItem("currentColor", titles.color[index]);
-    localStorage.setItem("extractedLetters", extractLetters(title));
-    localStorage.setItem("currentID", index);
+    setTitle(title);
+    setColor(titles.color[index]);
+    setInitials(extractLetters(title));
+    setId(index);
   };
 
   return (
@@ -193,7 +196,16 @@ const Home = () => {
         </div>
       </div>
       <div className={styles.notesContainer}>
-        {notesSelected ? <NotesDisplay /> : <BaseNotes />}
+        {notesSelected ? (
+          <NotesDisplay
+            id={id}
+            title={title}
+            color={color}
+            initials={initials}
+          />
+        ) : (
+          <BaseNotes />
+        )}
       </div>
     </div>
   );

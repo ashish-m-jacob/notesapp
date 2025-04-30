@@ -1,7 +1,7 @@
 import { React, useState, useEffect } from "react";
 import styles from "./NotesDisplay.module.css";
 
-const NotesDisplay = () => {
+const NotesDisplay = (props) => {
   const [disabled, setDisabled] = useState(true);
   const [note, setNote] = useState("");
   const [notes, setNotes] = useState({
@@ -10,20 +10,10 @@ const NotesDisplay = () => {
     time: [],
   });
 
-  //details from titles
-  const currentTitle = localStorage.getItem("currentTitle");
-  const color = localStorage.getItem("currentColor");
-  const firstLetters = localStorage.getItem("extractedLetters");
-  const id = localStorage.getItem("currentID");
-
-  // const [details, setDetails] = useState({
-  //   title: localStorage.getItem("currentTitle"),
-  //   bgColor: localStorage.getItem("currentColor"),
-  //   initials: localStorage.getItem("extractedLetters"),
-  // });
-
   useEffect(() => {
-    const storedNotes = localStorage.getItem(id.toString());
+    const storedNotes = localStorage.getItem(props.id);
+
+    console.log(props.id);
 
     if (storedNotes) {
       const parsedNotes = JSON.parse(storedNotes);
@@ -40,17 +30,8 @@ const NotesDisplay = () => {
         time: [],
       });
     }
-  }, [id]);
+  }, [props.id]);
 
-  // useEffect(() => {
-  //   setDetails({
-  //     title: currentTitle,
-  //     bgColor: color,
-  //     initials: firstLetters,
-  //   });
-
-  //   console.log("titles useEffect is triggered");
-  // }, [currentTitle]);
   const monthNames = [
     "Jan",
     "Feb",
@@ -94,8 +75,7 @@ const NotesDisplay = () => {
 
   const handleSubmit = () => {
     const date = new Date();
-
-    const dateStamp = `${date.getDay()} ${
+    const dateStamp = `${date.getDate()} ${
       monthNames[date.getMonth()]
     } ${date.getFullYear()}`;
 
@@ -103,27 +83,38 @@ const NotesDisplay = () => {
       date.getHours() >= 12 ? `PM` : `AM`
     }`;
 
+    localStorage.setItem(
+      props.id,
+      JSON.stringify({
+        text: [...notes.text, note],
+        date: [...notes.date, dateStamp],
+        time: [...notes.time, timeStamp],
+      })
+    );
     setNotes({
       text: [...notes.text, note],
       date: [...notes.date, dateStamp],
       time: [...notes.time, timeStamp],
     });
 
-    localStorage.setItem(id.toString(), JSON.stringify(notes));
+    console.log(note);
+
     document.getElementById("textBox").value = "";
     setNote("");
     setDisabled(true);
-    console.log(notes);
   };
 
   return (
     <div className={styles.notesDisplayContainer}>
       <div className={styles.titleDisplay}>
-        <div className={styles.iconDiv} style={{ backgroundColor: color }}>
-          <h2>{firstLetters}</h2>
+        <div
+          className={styles.iconDiv}
+          style={{ backgroundColor: props.color }}
+        >
+          <h2>{props.initials}</h2>
         </div>
         <div className={styles.titleDiv}>
-          <h2>{currentTitle}</h2>
+          <h2>{props.title}</h2>
         </div>
       </div>
 
@@ -131,8 +122,12 @@ const NotesDisplay = () => {
         {notes.text.map((note, index) => (
           <div className={styles.noteContainer} key={index}>
             <div className={styles.note}>{note}</div>
-            <div className={styles.date}>{notes.date[index]}</div>
-            <div className={styles.time}>{notes.time[index]}</div>
+            <div className={styles.dateTime}>
+              <p className={styles.date}>{notes.date[index]}</p>
+              <ul>
+                <li className={styles.time}>{notes.time[index]}</li>
+              </ul>
+            </div>
           </div>
         ))}
       </div>
