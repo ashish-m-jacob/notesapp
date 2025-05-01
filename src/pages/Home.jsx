@@ -146,7 +146,10 @@ const Home = () => {
 
         {modalOpen && (
           <div className={styles.modal}>
-            <div className={styles.overlay}></div>
+            <div
+              className={styles.overlay}
+              onClick={() => setModalOpen(false)}
+            ></div>
             <div className={styles.modalContent}>
               <h3>Create New Group</h3>
 
