@@ -41,47 +41,54 @@ const Home = () => {
   }, [groupName]);
 
   const isRepeated = () => {
-    return titles.title.includes(note);
+    let result = false;
+
+    for (let i = 0; i < titles.title.length; i++) {
+      if (groupName === titles.title[i]) {
+        result = true;
+      }
+    }
+    return result;
   };
 
   const handleCreate = () => {
     const storedTitles = localStorage.getItem("titles");
-    if (titles && isRepeated) {
+    const checkRepeat = isRepeated();
+
+    if (groupName === "" || selectedColor === null) {
+      alert("Please fill all the fields");
+    } else if (checkRepeat === true) {
       alert("You cannot create groups with the same name!");
     } else {
-      if (groupName === "" || selectedColor === null) {
-        alert("Please fill all the fields");
+      //add stored titles to the state
+
+      alert("Group Created!");
+
+      localStorage.setItem(
+        "titles",
+        JSON.stringify({
+          title: [...titles.title, groupName],
+          color: [...titles.color, selectedColor],
+        })
+      );
+
+      if (storedTitles) {
+        const parsedTitles = JSON.parse(storedTitles);
+
+        setTitles({
+          title: [...parsedTitles.title],
+          color: [...parsedTitles.color],
+        });
       } else {
-        //add stored titles to the state
-
-        alert("Group Created!");
-
-        localStorage.setItem(
-          "titles",
-          JSON.stringify({
-            title: [...titles.title, groupName],
-            color: [...titles.color, selectedColor],
-          })
-        );
-
-        if (storedTitles) {
-          const parsedTitles = JSON.parse(storedTitles);
-
-          setTitles({
-            title: [...parsedTitles.title],
-            color: [...parsedTitles.color],
-          });
-        } else {
-          setTitles({
-            title: [groupName],
-            color: [selectedColor],
-          });
-        }
-
-        setGroupName("");
-        setSelectedColor(null);
-        setModalOpen(false);
+        setTitles({
+          title: [groupName],
+          color: [selectedColor],
+        });
       }
+
+      setGroupName("");
+      setSelectedColor(null);
+      setModalOpen(false);
     }
   };
 
