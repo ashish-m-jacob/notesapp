@@ -40,40 +40,48 @@ const Home = () => {
     }
   }, [groupName]);
 
+  const isRepeated = () => {
+    return titles.title.includes(note);
+  };
+
   const handleCreate = () => {
     const storedTitles = localStorage.getItem("titles");
-    if (groupName === "" || selectedColor === null) {
-      alert("Please fill all the fields");
+    if (titles && isRepeated) {
+      alert("You cannot create groups with the same name!");
     } else {
-      //add stored titles to the state
-
-      alert("Group Created!");
-
-      localStorage.setItem(
-        "titles",
-        JSON.stringify({
-          title: [...titles.title, groupName],
-          color: [...titles.color, selectedColor],
-        })
-      );
-
-      if (storedTitles) {
-        const parsedTitles = JSON.parse(storedTitles);
-
-        setTitles({
-          title: [...parsedTitles.title],
-          color: [...parsedTitles.color],
-        });
+      if (groupName === "" || selectedColor === null) {
+        alert("Please fill all the fields");
       } else {
-        setTitles({
-          title: [groupName],
-          color: [selectedColor],
-        });
-      }
+        //add stored titles to the state
 
-      setGroupName("");
-      setSelectedColor(null);
-      setModalOpen(false);
+        alert("Group Created!");
+
+        localStorage.setItem(
+          "titles",
+          JSON.stringify({
+            title: [...titles.title, groupName],
+            color: [...titles.color, selectedColor],
+          })
+        );
+
+        if (storedTitles) {
+          const parsedTitles = JSON.parse(storedTitles);
+
+          setTitles({
+            title: [...parsedTitles.title],
+            color: [...parsedTitles.color],
+          });
+        } else {
+          setTitles({
+            title: [groupName],
+            color: [selectedColor],
+          });
+        }
+
+        setGroupName("");
+        setSelectedColor(null);
+        setModalOpen(false);
+      }
     }
   };
 
