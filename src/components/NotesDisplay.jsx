@@ -9,6 +9,16 @@ const NotesDisplay = (props) => {
     date: [],
     time: [],
   });
+  const textBox = document.getElementById("textBox");
+
+  if (textBox) {
+    textBox.addEventListener("keyup", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        note === null ? console.log("Cannot add") : handleSubmit();
+      }
+    });
+  }
 
   useEffect(() => {
     const storedNotes = localStorage.getItem(props.id);
@@ -49,14 +59,17 @@ const NotesDisplay = (props) => {
 
   const handleChange = (e) => {
     setNote(e.target.value);
-    note.length > 1 ? setDisabled(false) : setDisabled(true);
+
+    note === null || note.length <= 1 ? setDisabled(true) : setDisabled(false);
+
+    console.log(note.length);
   };
 
-  const convertHours = (hour) => {
-    if (hour === 0) {
+  const addZero = (num) => {
+    if (num === 0) {
       return "12";
-    } else if (hour > 12) {
-      let result = hour - 12;
+    } else if (num > 12) {
+      let result = num - 12;
 
       if (result < 10) {
         return "0" + result;
@@ -64,7 +77,7 @@ const NotesDisplay = (props) => {
         return result;
       }
     } else {
-      let result = hour;
+      let result = num;
       if (result < 10) {
         return "0" + result;
       } else {
@@ -79,25 +92,25 @@ const NotesDisplay = (props) => {
       monthNames[date.getMonth()]
     } ${date.getFullYear()}`;
 
-    const timeStamp = `${convertHours(date.getHours())}:${date.getMinutes()} ${
-      date.getHours() >= 12 ? `PM` : `AM`
-    }`;
+    const timeStamp = `${addZero(date.getHours())}:${addZero(
+      date.getMinutes()
+    )} ${date.getHours() >= 12 ? `PM` : `AM`}`;
 
-    localStorage.setItem(
-      props.id,
-      JSON.stringify({
+    if (disabled === false) {
+      localStorage.setItem(
+        props.id,
+        JSON.stringify({
+          text: [...notes.text, note],
+          date: [...notes.date, dateStamp],
+          time: [...notes.time, timeStamp],
+        })
+      );
+      setNotes({
         text: [...notes.text, note],
         date: [...notes.date, dateStamp],
         time: [...notes.time, timeStamp],
-      })
-    );
-    setNotes({
-      text: [...notes.text, note],
-      date: [...notes.date, dateStamp],
-      time: [...notes.time, timeStamp],
-    });
-
-    console.log(note);
+      });
+    }
 
     document.getElementById("textBox").value = "";
     setNote("");
