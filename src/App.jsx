@@ -1,9 +1,23 @@
 import Home from "./pages/Home";
+import { Toaster } from "react-hot-toast";
 
-import "./App.css";
+import styles from "./App.module.css";
 
 function App() {
-  return <Home />;
+  return (
+    <div className={styles.appContainer}>
+      <Home />;
+      <Toaster
+        toastOptions={{
+          style: {
+            fontFamily: "Roboto",
+            margin: 0,
+          },
+        }}
+      />
+      ;
+    </div>
+  );
 }
 
 export default App;

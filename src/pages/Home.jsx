@@ -1,4 +1,5 @@
 import { React, useState, useEffect } from "react";
+import toast from "react-hot-toast";
 
 import styles from "./Home.module.css";
 import BaseNotes from "../components/BaseNotes";
@@ -56,13 +57,13 @@ const Home = () => {
     const checkRepeat = isRepeated();
 
     if (groupName === "" || selectedColor === null) {
-      alert("Please fill all the fields");
+      toast.error("Please fill all the fields");
     } else if (checkRepeat === true) {
-      alert("You cannot create groups with the same name!");
+      toast.error("Duplicate groups cannot be created!");
     } else {
       //add stored titles to the state
 
-      alert("Group Created!");
+      toast.success("Group created!");
 
       localStorage.setItem(
         "titles",
