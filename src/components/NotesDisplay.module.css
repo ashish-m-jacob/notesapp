@@ -65,6 +65,14 @@
   padding-left: 2vw;
 }
 
+.backButton {
+  margin-right: 2vw;
+  display: none;
+}
+
+.backButton img {
+  width: 1vw;
+}
 .iconDiv {
   height: 7vh;
   width: 7vh;
@@ -131,4 +139,29 @@
   height: 5vh;
   background-position: center;
   cursor: not-allowed;
+}
+
+@media only screen and (max-width: 769px) {
+  .notesDisplayContainer {
+    grid-template-rows: 1fr 7fr 2fr;
+  }
+  .dateTime {
+    gap: 5vw;
+  }
+  .textBoxDiv {
+    grid-template-columns: 8fr 2fr;
+  }
+  .sendButtonContainer {
+    justify-content: center;
+    padding-bottom: 0;
+    border: none;
+  }
+
+  .sendButton:focus {
+    border: none;
+  }
+
+  .backButton img {
+    width: 5vw;
+  }
 }

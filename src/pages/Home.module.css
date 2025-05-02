@@ -225,4 +225,8 @@
   .notesContainer {
     display: none;
   }
+
+  .note {
+    overflow-wrap: normal;
+  }
 }

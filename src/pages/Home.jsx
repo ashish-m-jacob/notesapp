@@ -6,13 +6,15 @@ import BaseNotes from "../components/BaseNotes";
 import NotesDisplay from "../components/NotesDisplay";
 
 const Home = () => {
+  const mQuery = window.matchMedia("(max-width: 769px)");
   const [modalOpen, setModalOpen] = useState(false);
   const [titles, setTitles] = useState({
     title: [],
     color: [],
   });
 
-  const [notesSelected, isNotesSelected] = useState(false);
+  const [notesSelected, setNotesSelected] = useState(false);
+  const [notesView, setNotesView] = useState(false);
 
   const [groupName, setGroupName] = useState("");
   const [id, setId] = useState("");
@@ -29,6 +31,16 @@ const Home = () => {
     "#6691FF",
   ];
 
+  const updateNotesView = (val) => {
+    setNotesView(val);
+  };
+
+  const titlesContainer = document.getElementById("titlesContainer");
+
+  const notesContainer = document.getElementById("notesContainer");
+
+  const addButton = document.getElementById("openModal");
+
   useEffect(() => {
     const storedTitles = localStorage.getItem("titles");
 
@@ -40,6 +52,10 @@ const Home = () => {
       });
     }
   }, [groupName]);
+
+  mQuery.addEventListener("change", () => {
+    mobileView(mQuery);
+  });
 
   const isRepeated = () => {
     let result = false;
@@ -121,17 +137,38 @@ const Home = () => {
 
     document.getElementById(index).classList.add(styles.selectedTitle);
 
-    isNotesSelected(true);
-
+    setNotesSelected(true);
+    setNotesView(true);
     setTitle(title);
     setColor(titles.color[index]);
     setInitials(extractLetters(title));
     setId(index);
   };
 
+  const mobileView = (query) => {
+    if (query.matches) {
+      if (titlesContainer && notesContainer) {
+        if (notesView) {
+          titlesContainer.style.display = "none";
+          notesContainer.style.display = "block";
+          addButton.style.display = "none";
+        } else {
+          notesContainer.style.display = "none";
+          titlesContainer.style.display = "block";
+          addButton.style.display = "block";
+        }
+      }
+    } else {
+      titlesContainer.style.display = "flex";
+      notesContainer.style.display = "block";
+      addButton.style.display = "block";
+    }
+  };
+  mobileView(mQuery);
+
   return (
     <div className={styles.homeContainer}>
-      <div className={styles.titlesContainer}>
+      <div className={styles.titlesContainer} id="titlesContainer">
         <div className={styles.titlesHeading}>
           <h1>Pocket Notes</h1>
         </div>
@@ -213,13 +250,15 @@ const Home = () => {
           </button>
         </div>
       </div>
-      <div className={styles.notesContainer}>
+      <div className={styles.notesContainer} id="notesContainer">
         {notesSelected ? (
           <NotesDisplay
             id={id}
             title={title}
             color={color}
             initials={initials}
+            noteSelect={updateNotesView}
+            mQuery={mQuery}
           />
         ) : (
           <BaseNotes />

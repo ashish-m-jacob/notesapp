@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import styles from "./NotesDisplay.module.css";
+import backButton from "../assets/backButton.png";
 
 const NotesDisplay = (props) => {
   const [disabled, setDisabled] = useState(true);
@@ -42,6 +43,7 @@ const NotesDisplay = (props) => {
     }
   }, [props.id]);
 
+  const backButtonDiv = document.getElementById("backButton");
   const monthNames = [
     "Jan",
     "Feb",
@@ -117,9 +119,33 @@ const NotesDisplay = (props) => {
     setDisabled(true);
   };
 
+  const handleBackClick = () => {
+    props.noteSelect(false);
+  };
+  const mobileView = (query) => {
+    if (query.matches) {
+      if (backButtonDiv) {
+        backButtonDiv.style.display = "flex";
+      }
+    } else {
+      backButtonDiv.style.display = "none";
+    }
+  };
+  props.mQuery.addEventListener("change", () => {
+    mobileView(props.mQuery);
+  });
+  mobileView(props.mQuery);
+
   return (
     <div className={styles.notesDisplayContainer}>
       <div className={styles.titleDisplay}>
+        <div
+          className={styles.backButton}
+          id="backButton"
+          onClick={handleBackClick}
+        >
+          <img src={backButton}></img>
+        </div>
         <div
           className={styles.iconDiv}
           style={{ backgroundColor: props.color }}
