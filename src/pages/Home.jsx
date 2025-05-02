@@ -135,7 +135,6 @@ const Home = () => {
         <div className={styles.titlesHeading}>
           <h1>Pocket Notes</h1>
         </div>
-
         <div className={styles.titlesList}>
           {titles.title.map((title, index) => (
             <div

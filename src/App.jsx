@@ -6,7 +6,7 @@ import styles from "./App.module.css";
 function App() {
   return (
     <div className={styles.appContainer}>
-      <Home />;
+      <Home />
       <Toaster
         toastOptions={{
           style: {
@@ -15,7 +15,6 @@ function App() {
           },
         }}
       />
-      ;
     </div>
   );
 }

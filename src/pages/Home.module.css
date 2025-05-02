@@ -14,19 +14,23 @@
   max-height: 100vh;
   overflow-y: scroll;
   cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }
 
 .titlesHeading {
-  position: absolute;
+  position: sticky;
   padding: 3vh;
   background-color: white;
-  padding-left: 5vw;
-  width: 23.1%;
+  width: 100%;
+  top: 0;
 }
 
 .titlesHeading h1 {
   position: sticky;
   width: 100%;
+  text-align: center;
 }
 
 .titlesAdd {
@@ -140,7 +144,6 @@
 }
 
 .titlesList {
-  margin-top: 10vh;
   margin-bottom: 2vh;
   display: flex;
   justify-content: center;
@@ -181,4 +184,45 @@
 
 .selectedTitle {
   background-color: #d8d3d3;
+}
+
+@media only screen and (max-width: 769px) {
+  .homeContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .titlesContainer,
+  .titleBox {
+    width: 100%;
+  }
+
+  .titleContainer {
+    width: 100%;
+  }
+
+  .titlesAdd {
+    margin-left: 65vw;
+  }
+
+  .modalContent {
+    width: 95vw;
+    height: 27vh;
+  }
+
+  .colorChoice {
+    width: 80%;
+  }
+
+  .modalContent h4,
+  .buttonContainer button {
+    font-size: 0.8rem;
+  }
+
+  .groupName input {
+    font-size: 0.8rem;
+    padding-left: 5vw;
+  }
+  .notesContainer {
+    display: none;
+  }
 }
