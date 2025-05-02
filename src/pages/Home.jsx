@@ -159,9 +159,11 @@ const Home = () => {
         }
       }
     } else {
-      titlesContainer.style.display = "flex";
-      notesContainer.style.display = "block";
-      addButton.style.display = "block";
+      if (titlesContainer && notesContainer && addButton) {
+        titlesContainer.style.display = "flex";
+        notesContainer.style.display = "block";
+        addButton.style.display = "block";
+      }
     }
   };
   mobileView(mQuery);

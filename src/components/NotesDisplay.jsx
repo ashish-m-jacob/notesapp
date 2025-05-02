@@ -128,7 +128,9 @@ const NotesDisplay = (props) => {
         backButtonDiv.style.display = "flex";
       }
     } else {
-      backButtonDiv.style.display = "none";
+      if (backButtonDiv) {
+        backButtonDiv.style.display = "none";
+      }
     }
   };
   props.mQuery.addEventListener("change", () => {
@@ -160,7 +162,9 @@ const NotesDisplay = (props) => {
       <div className={styles.messageDisplayDiv}>
         {notes.text.map((note, index) => (
           <div className={styles.noteContainer} key={index}>
-            <div className={styles.note}>{note}</div>
+            <div className={styles.note}>
+              <p>{note}</p>
+            </div>
             <div className={styles.dateTime}>
               <p className={styles.date}>{notes.date[index]}</p>
               <ul>
